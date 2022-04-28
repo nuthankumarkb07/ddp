@@ -1,0 +1,17 @@
+
+service wildfly restart
+
+/opt/PrimeKey/support/
+
+https://download.primekey.com/docs/EJBCA-Enterprise/7_0_1/Web_Service_Interface.html
+
+
+
+
+bin/ejbca.sh ra addendentity --username nuthanra --dn "C=IN,OU=HC,O=GE,CN=nuthanra" --caname ManagementCA 1 JKS
+bin/ejbca.sh ra setclearpwd --username nuthanra
+bin/ejbca.sh batch --username nuthanra
+bin/ejbca.sh batch
+bin/ejbca.sh roles addrolemember "Super Administrator Role" ManagementCA --with WITH_COMMONNAME --value nuthanra
+bin/ejbca.sh ra listendentities -S 00
+

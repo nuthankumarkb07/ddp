@@ -1,0 +1,25 @@
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --apache --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --noninteractive --no-verify-ssl --cert-name redpanda
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --apache --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --noninteractive --no-verify-ssl --cert-name redpanda
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --apache --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --noninteractive --no-verify-ssl --cert-name redpanda
+
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/redpanda/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --apache --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --noninteractive --no-verify-ssl --cert-name redpanda-redpanda
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl
+
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/redpanda/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl --cert-name redpanda
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/intermediate/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl --cert-name intermediateCA
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl 
+
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/ddp_redpanda_acme/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl --cert-name subCAgenerated
+
+
+/snap/bin/certbot --server https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/ejbca/acme/ddptest/directory -d ddpedh-liv.centralindia.cloudapp.azure.com --agree-tos --email nuthan.basavaraju@ge.com --no-eff-email --no-verify-ssl --cert-name subCAgenerated4
+
+
+
