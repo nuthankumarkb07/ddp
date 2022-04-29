@@ -1,0 +1,21 @@
+
+# Get CA certificates
+curl https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/.well-known/est/test/cacerts -o cacerts.p7 --cacert ../ManagementCA.cacert.pem
+
+# Generate a key and CSR for a "device"
+# Make sure the subject DN and subject alternative name matches the end entity profile.
+
+openssl req -nodes -newkey rsa:4096 -keyout device.key -out device.csr -outform DER -subj "/CN=edhRedpandaServerProfile"
+openssl base64 -in device.csr -out device.b64 -e
+
+
+# Make initial enrollment, using EST password authentication (client certificate is also possible)
+
+curl -v --cacert ../ManagementCA.cacert.pem --user ejbca:ejbca123 --data @device.b64 -o device-p7.b64 -H "Content-Type: application/pkcs10" -H "Content-Transfer-Encoding: base64" https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/.well-known/est/test/simpleenroll --cert-type P12 --cert /home/azureuser/superadmin-2.p12:ejbca123
+
+# Convert the response into a PEM encoded certificate
+
+openssl base64 -in device-p7.b64 -out device-p7.der -d
+openssl pkcs7 -inform DER -in device-p7.der -print_certs -out device-cert.pem
+
+
