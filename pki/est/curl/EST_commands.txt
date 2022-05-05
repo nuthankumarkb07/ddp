@@ -1,0 +1,38 @@
+# Get CA certificates
+curl https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/.well-known/est/test/cacerts -o cacerts.p7 --cacert ../../ManagementCA.cacert.pem
+
+
+# Generate a key and CSR for a "device"
+# Make sure the subject DN and subject alternative name matches the end entity profile.
+
+
+openssl req -nodes -newkey rsa:2048 -keyout device.key -out device.csr -outform DER -subj "/CN=testredpanda”
+openssl base64 -in device.csr -out device.b64 -e
+
+
+# Make initial enrollment, using EST password authentication (client certificate is also possible)
+
+
+curl -v --cacert ../ManagementCA.cacert.pem --user ejbca:ejbca123 --data @device.b64 -o device-p7.b64 -H "Content-Type: application/pkcs10" -H "Content-Transfer-Encoding: base64" https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/.well-known/est/test/simpleenroll
+
+
+# Convert the response into a PEM encoded certificate
+
+
+openssl base64 -in device-p7.b64 -out device-p7.der -d
+openssl pkcs7 -inform DER -in device-p7.der -print_certs -out device-cert.pem
+
+
+# Generate a new key and CSR for the device, to renew with
+
+openssl req -nodes -newkey rsa:2048 -keyout device-new.key -out device-new.csr -outform DER -subj "/CN=testredpanda/OU=HC/O=GE/ST=KA/C=IN”
+openssl base64 -in device-new.csr -out device-new.b64 -e
+
+# Re-enroll by the device, authenticating with the existing key/certificate
+
+curl -v --cacert ../../ManagementCA.cacert.pem --key device.key --cert device-cert.pem --data @device-new.b64 -o device-new-p7.b64 -H "Content-Type: application/pkcs10" -H "Content-Transfer-Encoding: base64" https://ddpejbcaliv-vm.centralindia.cloudapp.azure.com/.well-known/est/test/simplereenroll
+
+# Convert the response into a PEM encoded certificate
+
+openssl base64 -in device-new-p7.b64 -out device-new-p7.der -d
+openssl pkcs7 -inform DER -in device-new-p7.der -print_certs -out device-new-cert.pem
