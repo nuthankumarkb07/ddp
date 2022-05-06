@@ -28,7 +28,7 @@ import io.vertx.core.impl.logging.LoggerFactory;
 @ApplicationScoped
 public class GreetingResource {
     private static final Logger logger = LoggerFactory.getLogger(GreetingResource.class);
-    public static String brokers = System.getenv("BROKER_URL") ==null ? "localhost:9092" : System.getenv("BROKER_URL");
+    public static String brokers = System.getenv("BROKER_URL") ==null ? "redpandaserver:9092" : System.getenv("BROKER_URL");
     public static String topic = System.getenv("TOPIC") ==null ? "nuthan" : System.getenv("TOPIC");
 
    
@@ -43,14 +43,7 @@ public class GreetingResource {
 		properties.put("compression.type", "gzip");
 		properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 		properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-
-        properties.put("security.protocol","SSL");
-        properties.put("ssl.truststore.location","/home/ubuntu/codebase/security/redpanda.client.truststore.jks");
-        properties.put("ssl.truststore.password","Minda00$");
-        properties.put("ssl.keystore.location","/home/ubuntu/codebase/security/redpanda.client.keystore.jks");
-        properties.put("ssl.keystore.password","Minda00$");
-        properties.put("ssl.key.password","Minda00$");
-
+		System.out.println(brokers);
             KafkaProducer<String, String> producer = new KafkaProducer<String, String>(properties);
             try {
                 for(int i = 0; i < 10;i++){

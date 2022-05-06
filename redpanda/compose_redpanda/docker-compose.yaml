@@ -1,0 +1,46 @@
+version: '3'
+networks:
+  redpanda_network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: '172.24.1.0/24'
+services:
+  redpanda1:
+    command:
+      - redpanda
+      - start
+      - --node-id
+      - '0'
+      - --kafka-addr
+      - 'internal://0.0.0.0:9092,external://172.24.1.2:19092'
+      - --advertise-kafka-addr
+      - 'internal://172.24.1.2:9092,external://127.0.0.1:19092'
+      - --pandaproxy-addr
+      - 'internal://0.0.0.0:8082,external://172.24.1.2:18082'
+      - --advertise-pandaproxy-addr
+      - 'internal://172.24.1.2:8082,external://127.0.0.1:18082'
+      - --schema-registry-addr
+      - '172.24.1.2:8081'
+      - --rpc-addr
+      - '172.24.1.2:33145'
+      - --advertise-rpc-addr
+      - '172.24.1.2:33145'
+      - --smp
+      - '1'
+      - --memory
+      - '1G'
+      - --reserve-memory
+      - '0M'
+      - --overprovisioned
+      - --check=false
+    image: 'docker.vectorized.io/vectorized/redpanda:latest'
+    container_name: 'redpanda1'
+    networks:
+      redpanda_network:
+        ipv4_address: '172.24.1.2'
+    ports:
+      - 18081:8081  # Schema registry port
+      - 18082:18082 # Pandaproxy port
+      - 19092:19092 # Kafka API port
+      - 19644:9644  # Prometheus and HTTP admin port
